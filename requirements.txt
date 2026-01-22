@@ -3,5 +3,3 @@ uvicorn
 pdfplumber
 python-docx
 scikit-learn
-transformers
-torch
