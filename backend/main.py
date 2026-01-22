@@ -10,14 +10,6 @@ from docx import Document
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Free AI Model
-from transformers import pipeline
-
-# -----------------------
-# Load Free AI Model
-# -----------------------
-ai_pipeline = pipeline("text2text-generation", model="google/flan-t5-large")
-
 # -----------------------
 # App Setup
 # -----------------------
@@ -101,12 +93,10 @@ def smart_skill_match(resume_text, jd_text):
     base_score = 0
     important_skills = ["docker", "aws", "fastapi", "microservices", "cloud"]
 
-    # Skill presence scoring
     for skill in important_skills:
         if skill in resume_text and skill in jd_text:
             base_score += 10
 
-    # Text similarity score
     texts = [resume_text, jd_text]
     vectorizer = TfidfVectorizer()
     tfidf = vectorizer.fit_transform(texts)
@@ -115,47 +105,14 @@ def smart_skill_match(resume_text, jd_text):
     final_score = int(similarity * 60 + base_score)
     return min(final_score, 100)
 
-
 # -----------------------
-# AI Resume Bullet (UNCHANGED)
+# Lightweight Resume Bullet Generator
 # -----------------------
 def generate_resume_bullet(resume_text, job_role, missing_skill):
-    prompt = f"""
-Write ONE resume bullet point.
-
-Context:
-Job Role = {job_role}
-Skill = {missing_skill}
-
-Rules:
-- Start with an action verb
-- Mention a real achievement
-- Max 25 words
-- No explanations
-- No instructions
-- Only the bullet sentence
-"""
-
-    try:
-        result = ai_pipeline(
-            prompt,
-            max_length=80,
-            do_sample=True,
-            temperature=0.8
-        )[0]["generated_text"]
-
-        bad_words = ["Job Role", "Skill", "Rules", "Context", "-", ":"]
-        for word in bad_words:
-            result = result.replace(word, "")
-
-        result = result.split(".")[0].strip() + "."
-        return result
-
-    except:
-        return "AI temporarily unavailable."
+    return f"Improved backend performance by implementing {missing_skill}, leading to faster deployments and better system scalability."
 
 # -----------------------
-# APIs (UNCHANGED)
+# APIs
 # -----------------------
 @app.post("/upload")
 async def upload_files(resume: UploadFile = File(...), jd: UploadFile = File(...)):
@@ -210,7 +167,7 @@ def optimize_resume(resume_text: str, job_role: str, missing_skill: str):
     return {"bullet": generate_resume_bullet(resume_text, job_role, missing_skill)}
 
 # -----------------------
-# NEW FEATURE: Resume A vs Resume B (ADDED ONLY)
+# Resume A vs Resume B Upload Comparison
 # -----------------------
 @app.post("/compare-resumes")
 async def compare_resumes_upload(
@@ -251,9 +208,8 @@ async def compare_resumes_upload(
         "reason": reason_text
     }
 
-
 # -----------------------
-# Serve Frontend (UNCHANGED)
+# Serve Frontend
 # -----------------------
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 frontend_path = os.path.join(BASE_DIR, "frontend")
