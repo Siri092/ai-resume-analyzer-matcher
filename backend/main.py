@@ -212,6 +212,5 @@ async def compare_resumes_upload(
 # Serve Frontend
 # -----------------------
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-frontend_path = os.path.join(BASE_DIR, "frontend")
-
+frontend_path = os.path.join(BASE_DIR, "frontend", "public")
 app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
