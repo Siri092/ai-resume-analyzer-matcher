@@ -1,0 +1,33 @@
+Name: Rahul Sharma  
+Email: rahul@gmail.com  
+
+Summary  
+Backend Engineer with experience in building scalable microservices using FastAPI, Docker, and AWS.
+
+Skills  
+Python  
+FastAPI  
+Django  
+Docker  
+AWS  
+Microservices  
+Cloud  
+PostgreSQL  
+SQL  
+Git  
+Linux  
+REST API  
+
+Projects  
+Microservices E-Commerce Platform  
+Built Docker-based microservices using FastAPI and PostgreSQL. Designed REST APIs and deployed services on AWS for scalability.
+
+Cloud Resume Analyzer  
+Developed a resume analyzer using Python, NLP, and cloud services. Deployed backend using Docker and AWS.
+
+Experience  
+Backend Developer Intern  
+Worked on microservices architecture, Docker containerization, and AWS deployment.
+
+Education  
+B.Tech in Computer Science  

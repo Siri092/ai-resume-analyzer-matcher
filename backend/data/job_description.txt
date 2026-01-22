@@ -1,0 +1,7 @@
+We are hiring a Data Analyst.
+
+Required Skills:
+Python, SQL, REST APIs
+
+Responsibilities:
+Analyze datasets and build dashboards

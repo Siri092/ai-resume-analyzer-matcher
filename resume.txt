@@ -1,0 +1,23 @@
+Name: Siri Varshitha  
+Role: Backend Developer  
+
+Skills:
+Python, FastAPI, Flask, Django, SQL, PostgreSQL, MongoDB, REST API, Git, Docker, Linux, AWS, Machine Learning, NLP
+
+Experience:
+• Developed REST APIs using FastAPI and Flask for scalable backend services.
+• Built authentication systems using Django and JWT.
+• Designed relational databases using PostgreSQL and MySQL.
+• Deployed backend services on AWS EC2 with Docker.
+• Implemented data processing pipelines using Python and Pandas.
+
+Projects:
+• AI Resume Job Matcher using FastAPI and NLP techniques.
+• Chatbot using NLP and Machine Learning.
+• E-commerce backend using Django and PostgreSQL.
+
+Certifications:
+Python for Data Science, AWS Cloud Fundamentals
+
+Achievements:
+Solved 120+ coding problems on Smart Interviews.

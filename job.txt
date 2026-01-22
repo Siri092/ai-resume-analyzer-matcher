@@ -1,0 +1,15 @@
+Job Title: Backend Software Engineer  
+
+Required Skills:
+Python, Django, FastAPI, REST API, PostgreSQL, Docker, AWS, Git, Microservices, Linux
+
+Responsibilities:
+• Build scalable backend services using Django and FastAPI.
+• Design RESTful APIs for web applications.
+• Manage PostgreSQL databases efficiently.
+• Deploy services using Docker and AWS.
+• Implement secure authentication systems.
+• Optimize application performance.
+
+Preferred:
+Experience with Machine Learning, NLP, and cloud deployments.

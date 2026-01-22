@@ -1,0 +1,32 @@
+Name: Rahul Sharma  
+Email: rahul@gmail.com  
+Phone: 9XXXXXXXXX  
+
+Summary  
+Backend developer with strong fundamentals in Python and Django. Experienced in building APIs and working with databases.
+
+Skills  
+Python  
+Django  
+SQL  
+PostgreSQL  
+Git  
+Linux  
+REST API  
+Machine Learning  
+NLP  
+Cloud (AWS)
+
+Projects  
+Student Management System  
+Built a web application using Django and PostgreSQL to manage student records. Implemented CRUD operations and REST APIs.
+
+AI Chatbot  
+Developed a chatbot using Python and basic NLP techniques for answering user queries.
+
+Experience  
+Backend Developer Intern  
+Worked on API development and database integration using Django and PostgreSQL.
+
+Education  
+B.Tech in Computer Science  

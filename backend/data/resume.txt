@@ -1,0 +1,8 @@
+Skills:
+Python, SQL, Machine Learning
+
+Projects:
+Fake News Detection using NLP and Logistic Regression
+
+Experience:
+Built a chatbot using Python and NLP
