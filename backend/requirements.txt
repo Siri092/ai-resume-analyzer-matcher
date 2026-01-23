@@ -1,5 +1,10 @@
 fastapi
 uvicorn
-pdfplumber
 python-multipart
+
+pdfplumber
 python-docx
+
+numpy
+pandas
+scikit-learn
