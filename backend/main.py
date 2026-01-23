@@ -1,12 +1,11 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-import os
+
 import pdfplumber
 from docx import Document
 
-# NLP
+# ML / NLP
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -22,6 +21,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# -----------------------
+# Health & Root (IMPORTANT)
+# -----------------------
+@app.get("/")
+def root():
+    return {"message": "AI Resume Job Matcher backend is live 🚀"}
+
+@app.get("/healthz")
+def health():
+    return {"status": "ok"}
 
 # -----------------------
 # Skill Keywords
@@ -58,9 +68,9 @@ def extract_text_from_pdf(file):
 
 def extract_text_from_docx(file):
     doc = Document(file)
-    return "\n".join([p.text for p in doc.paragraphs])
+    return "\n".join(p.text for p in doc.paragraphs)
 
-def extract_skills(text):
+def extract_skills(text: str):
     text = text.lower()
     return {skill for skill in SKILL_KEYWORDS if skill in text}
 
@@ -86,7 +96,7 @@ def ats_readability_check(file):
 
     return {"ats_score": max(score, 0), "issues": list(set(issues))}
 
-def smart_skill_match(resume_text, jd_text):
+def smart_skill_match(resume_text: str, jd_text: str):
     resume_text = resume_text.lower()
     jd_text = jd_text.lower()
 
@@ -105,17 +115,20 @@ def smart_skill_match(resume_text, jd_text):
     final_score = int(similarity * 60 + base_score)
     return min(final_score, 100)
 
-# -----------------------
-# Lightweight Resume Bullet Generator
-# -----------------------
 def generate_resume_bullet(resume_text, job_role, missing_skill):
-    return f"Improved backend performance by implementing {missing_skill}, leading to faster deployments and better system scalability."
+    return (
+        f"Improved backend performance by implementing {missing_skill}, "
+        f"leading to faster deployments and better system scalability."
+    )
 
 # -----------------------
 # APIs
 # -----------------------
 @app.post("/upload")
-async def upload_files(resume: UploadFile = File(...), jd: UploadFile = File(...)):
+async def upload_files(
+    resume: UploadFile = File(...),
+    jd: UploadFile = File(...)
+):
     if resume.filename.endswith(".pdf"):
         resume_text = extract_text_from_pdf(resume.file)
     elif resume.filename.endswith(".docx"):
@@ -164,11 +177,10 @@ async def ats_check(resume: UploadFile = File(...)):
 
 @app.post("/optimize")
 def optimize_resume(resume_text: str, job_role: str, missing_skill: str):
-    return {"bullet": generate_resume_bullet(resume_text, job_role, missing_skill)}
+    return {
+        "bullet": generate_resume_bullet(resume_text, job_role, missing_skill)
+    }
 
-# -----------------------
-# Resume A vs Resume B Upload Comparison
-# -----------------------
 @app.post("/compare-resumes")
 async def compare_resumes_upload(
     resumeA: UploadFile = File(...),
@@ -181,7 +193,7 @@ async def compare_resumes_upload(
         elif file.filename.endswith(".docx"):
             return extract_text_from_docx(file.file)
         else:
-            return (file.file.read()).decode("utf-8")
+            return file.file.read().decode("utf-8")
 
     textA = extract(resumeA).lower()
     textB = extract(resumeB).lower()
@@ -193,23 +205,17 @@ async def compare_resumes_upload(
     winner = "Resume A" if scoreA > scoreB else "Resume B"
 
     important_skills = ["docker", "aws", "fastapi", "microservices", "cloud"]
-
-    reasons = []
-    for skill in important_skills:
-        if skill in (textB if winner == "Resume B" else textA) and skill in jd_text:
-            reasons.append(skill)
-
-    reason_text = "Mentions " + ", ".join(reasons) if reasons else "Better overall match with job description"
+    reasons = [
+        skill for skill in important_skills
+        if skill in (textA if winner == "Resume A" else textB) and skill in jd_text
+    ]
 
     return {
         "resumeA_score": scoreA,
         "resumeB_score": scoreB,
         "winner": winner,
-        "reason": reason_text
+        "reason": (
+            "Mentions " + ", ".join(reasons)
+            if reasons else "Better overall match with job description"
+        )
     }
-
-# -----------------------
-# Serve Frontend
-# -----------------------
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-frontend_path = os.path.join(BASE_DIR, "frontend", "build")
